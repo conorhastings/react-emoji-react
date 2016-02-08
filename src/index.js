@@ -101,7 +101,7 @@ export const EmojiWrapper = ({reactions, onReaction}) => {
 class EmojiSelector extends Component {
 	constructor() {
 		super();
-		this.state = { hovered: false };
+		this.state = { filter: "" };
 	}
 
 	render() {
@@ -109,7 +109,19 @@ class EmojiSelector extends Component {
 		if (!showing) {
 			return null;
 		}
-		const emojis = Object.keys(emoji.name).map(em => {
+		const searchInput = (
+			<div>
+				<input 
+					style={{margin: 10, width: '90%', borderRadius: 5, border: '1px solid #E8E8E8'}}
+					type='text' 
+					placeholder='Search'
+					value={this.state.filter} 
+					onChange={(e) => this.setState({filter: e.target.value})}
+				/>
+			</div>
+		);
+		const show = Object.keys(emoji.name).filter(name => name.indexOf(this.state.filter) !== -1);
+		const emojis = show.map(em => {
 			return (
 				<span 
 					style={{cursor: 'pointer'}} 
@@ -122,7 +134,10 @@ class EmojiSelector extends Component {
 		});
 		return (
 			<div style={selectorStyle}>
-				{emojis}
+				{searchInput}
+				<div style={{padding: 15, paddingTop: 5, width: '90%'}}>
+					{emojis}
+				</div>
 			</div>
 		);
 	}
