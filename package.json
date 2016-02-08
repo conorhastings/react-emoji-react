@@ -17,8 +17,15 @@
     "like",
     "button"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conorhastings/react-emoji-react.git"
+  },
   "author": "Conor Hastings",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/conorhastings/react-emoji-react/issues"
+  },
   "devDependencies": {
     "babel-cli": "^6.4.5",
     "babel-core": "^6.4.5",
