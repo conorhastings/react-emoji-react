@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "scripts": {
     "demo": "./node_modules/.bin/webpack --config webpack.demo.config.js --watch --progress",
-    "build": "babel src --out-dir dist",
+    "build": "NODE_ENV='production' ./node_modules/.bin/webpack --progress -p",
+    "watch": "NODE_ENV='development' ./node_modules/.bin/webpack --watch --progress",
     "prepublish": "npm run build"
   },
   "keywords": [
@@ -25,9 +26,11 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-2": "^6.3.13",
+    "file-loader": "^0.8.5",
     "json-loader": "^0.5.4",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.13"
   },
   "dependencies": {

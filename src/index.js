@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import emoji from 'gemoji';
+import emoji from './all-emoji';
 
 const wrapperStyle = {
 	display: 'inline-block',
@@ -52,6 +52,8 @@ const selectorStyle = {
 	top: 0
 };
 
+const EmojiImage = ({name}) => <img style={{width: 16, height: 16}} src={require(`./emoji/${name}.png`)} />;
+
 class SingleEmoji extends Component {
 	constructor() {
 		super();
@@ -81,7 +83,7 @@ class SingleEmoji extends Component {
 				onMouseEnter={() => this.setState({hovered: true})}
 				onMouseLeave={() => this.setState({hovered: false})}
 			>
-				<span style={emojiStyle}>{emoji.name[name].emoji}</span>
+				<span style={emojiStyle}><EmojiImage name={name} /></span>
 				<span style={countFinalStyle}>{count}</span>
 			</div>
 		);
@@ -140,19 +142,22 @@ class EmojiSelector extends Component {
 				}}
 				onMouseEnter={() => this.setState({ xHovered: true})}
 				onMouseLeave={() => this.setState({ xHovered: false})}
-			>
+			> 
 				x
 			</span>
 		);
-		const show = Object.keys(emoji.name).filter(name => name.indexOf(this.state.filter) !== -1);
+		const show = emoji.filter(name => name.indexOf(this.state.filter) !== -1);
 		const emojis = show.map(em => {
 			return (
 				<span 
-					style={{cursor: 'pointer'}} 
+					style={{cursor: 'pointer', padding: 5}} 
 					key={em}
-					onClick={() => onEmojiClick(em)}
+					onClick={() => {
+						onEmojiClick(em)
+						close();
+					}}
 				>
-					{emoji.name[em].emoji}
+					<EmojiImage name={em} />
 				</span>
 			);
 		});
@@ -204,7 +209,7 @@ export default class EmojiReact extends Component {
 					style={plusButtonStyle}
 					onMouseEnter={() => this.setState({ hovered: true })}
 					onMouseLeave={() => this.setState({ hovered: false})	}
-					onClick={() => this.closeSelector()}
+					onClick={() => this.setState({ showSelector: !this.state.showSelector})}
 				>
 					<span style={plusStyle}>+</span>
 				</div>
