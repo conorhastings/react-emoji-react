@@ -305,13 +305,15 @@
 	
 			var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(EmojiSelector).call(this));
 	
-			_this3.state = { hovered: false };
+			_this3.state = { filter: "" };
 			return _this3;
 		}
 	
 		_createClass(EmojiSelector, [{
 			key: 'render',
 			value: function render() {
+				var _this4 = this;
+	
 				var _props2 = this.props;
 				var showing = _props2.showing;
 				var onEmojiClick = _props2.onEmojiClick;
@@ -319,7 +321,23 @@
 				if (!showing) {
 					return null;
 				}
-				var emojis = Object.keys(_gemoji2.default.name).map(function (em) {
+				var searchInput = _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement('input', {
+						style: { margin: 10, width: '90%', borderRadius: 5, border: '1px solid #E8E8E8' },
+						type: 'text',
+						placeholder: 'Search',
+						value: this.state.filter,
+						onChange: function onChange(e) {
+							return _this4.setState({ filter: e.target.value });
+						}
+					})
+				);
+				var show = Object.keys(_gemoji2.default.name).filter(function (name) {
+					return name.indexOf(_this4.state.filter) !== -1;
+				});
+				var emojis = show.map(function (em) {
 					return _react2.default.createElement(
 						'span',
 						{
@@ -335,7 +353,12 @@
 				return _react2.default.createElement(
 					'div',
 					{ style: selectorStyle },
-					emojis
+					searchInput,
+					_react2.default.createElement(
+						'div',
+						{ style: { padding: 15, paddingTop: 5, width: '90%' } },
+						emojis
+					)
 				);
 			}
 		}]);
@@ -349,16 +372,16 @@
 		function EmojiReact() {
 			_classCallCheck(this, EmojiReact);
 	
-			var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(EmojiReact).call(this));
+			var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(EmojiReact).call(this));
 	
-			_this4.state = { hovered: false, showSelector: false };
-			return _this4;
+			_this5.state = { hovered: false, showSelector: false };
+			return _this5;
 		}
 	
 		_createClass(EmojiReact, [{
 			key: 'render',
 			value: function render() {
-				var _this5 = this;
+				var _this6 = this;
 	
 				var _props3 = this.props;
 				var reactions = _props3.reactions;
@@ -375,13 +398,13 @@
 						{
 							style: plusButtonStyle,
 							onMouseEnter: function onMouseEnter() {
-								return _this5.setState({ hovered: true });
+								return _this6.setState({ hovered: true });
 							},
 							onMouseLeave: function onMouseLeave() {
-								return _this5.setState({ hovered: false });
+								return _this6.setState({ hovered: false });
 							},
 							onClick: function onClick() {
-								return _this5.setState({ showSelector: !_this5.state.showSelector });
+								return _this6.setState({ showSelector: !_this6.state.showSelector });
 							}
 						},
 						_react2.default.createElement(
