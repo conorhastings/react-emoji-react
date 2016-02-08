@@ -52,7 +52,7 @@ const selectorStyle = {
 	top: 0
 };
 
-export class SingleEmoji extends Component {
+class SingleEmoji extends Component {
 	constructor() {
 		super();
 		this.state = { hovered: false };
@@ -88,7 +88,7 @@ export class SingleEmoji extends Component {
 	}
 }
 
-export const EmojiWrapper = ({reactions, onReaction}) => {
+const EmojiWrapper = ({reactions, onReaction}) => {
 	return (
 		<div style={{display: 'inline-block'}}>
 			{reactions.map(({name, count}) => (
@@ -101,24 +101,48 @@ export const EmojiWrapper = ({reactions, onReaction}) => {
 class EmojiSelector extends Component {
 	constructor() {
 		super();
-		this.state = { filter: "" };
+		this.state = { filter: "", xHovered: false };
 	}
 
 	render() {
-		const { showing, onEmojiClick } = this.props;
+		const { showing, onEmojiClick, close } = this.props;
 		if (!showing) {
 			return null;
+		}
+		let xStyle = {
+			color: '#E8E8E8', 
+			fontSize: 20,
+			cursor: 'pointer', 
+			float: 'right', 
+			marginTop: -32,
+			marginRight: 5 
+		};
+		if (this.state.xHovered) {
+			xStyle.color = '#4fb0fc';
 		}
 		const searchInput = (
 			<div>
 				<input 
-					style={{margin: 10, width: '90%', borderRadius: 5, border: '1px solid #E8E8E8'}}
+					style={{margin: 10, width: '85%', borderRadius: 5, border: '1px solid #E8E8E8'}}
 					type='text' 
 					placeholder='Search'
 					value={this.state.filter} 
 					onChange={(e) => this.setState({filter: e.target.value})}
 				/>
 			</div>
+		);
+		const x = (
+			<span 
+				style={xStyle}
+				onClick={() => {
+					this.setState({ xHovered: false});
+					close();
+				}}
+				onMouseEnter={() => this.setState({ xHovered: true})}
+				onMouseLeave={() => this.setState({ xHovered: false})}
+			>
+				x
+			</span>
 		);
 		const show = Object.keys(emoji.name).filter(name => name.indexOf(this.state.filter) !== -1);
 		const emojis = show.map(em => {
@@ -135,6 +159,7 @@ class EmojiSelector extends Component {
 		return (
 			<div style={selectorStyle}>
 				{searchInput}
+				{x}
 				<div style={{padding: 15, paddingTop: 5, width: '90%'}}>
 					{emojis}
 				</div>
@@ -147,6 +172,26 @@ export default class EmojiReact extends Component {
 	constructor() {
 		super();
 		this.state = { hovered: false, showSelector: false };
+		this.onKeyPress = this.onKeyPress.bind(this);
+		this.closeSelector = this.closeSelector.bind(this);
+	}
+
+	onKeyPress(e) {
+		if (e.keyCode === 27) {
+			this.closeSelector();
+		}
+	}
+
+	componentDidMount() {
+		document.addEventListener('keydown', this.onKeyPress);
+	}
+
+	componentWillUnMount() {
+		document.removeEventListener('keydown', this.onKeyPress);
+	}
+
+	closeSelector() {
+		this.setState({ showSelector: false });
 	}
 
 	render() {
@@ -159,11 +204,15 @@ export default class EmojiReact extends Component {
 					style={plusButtonStyle}
 					onMouseEnter={() => this.setState({ hovered: true })}
 					onMouseLeave={() => this.setState({ hovered: false})	}
-					onClick={() => this.setState({ showSelector: !this.state.showSelector })}
+					onClick={() => this.closeSelector()}
 				>
 					<span style={plusStyle}>+</span>
 				</div>
-				<EmojiSelector showing={this.state.showSelector} onEmojiClick={onEmojiClick} />
+				<EmojiSelector 
+					showing={this.state.showSelector} 
+					onEmojiClick={onEmojiClick} 
+					close={this.closeSelector}
+				/>
 			</div>
 		);
 		return (
