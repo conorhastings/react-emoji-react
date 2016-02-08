@@ -32,8 +32,5 @@
     "react-dom": "^0.14.7",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.13"
-  },
-  "dependencies": {
-    "gemoji": "^1.0.0"
   }
 }

@@ -45,8 +45,7 @@ const selectorStyle = {
 	boxShadow: '0 6px 8px 0 rgba(0, 0, 0, 0.24)',
 	backgroundColor: '#fff',
 	width: 250,
-	height: 150,
-	overflow: 'auto',
+	height: 220,
 	position: 'relative',
 	left: 10,
 	top: 0
@@ -100,17 +99,35 @@ const EmojiWrapper = ({reactions, onReaction}) => {
 	);
 }
 
+const SINGLE_EMOJI_HEIGHT = 23;
+const LOAD_HEIGHT = 500;
+const EMOJIS_ACROSS = 8
+
 class EmojiSelector extends Component {
 	constructor() {
 		super();
-		this.state = { filter: "", xHovered: false };
+		this.state = { 
+			filter: "", 
+			xHovered: false,
+			scrollPosition: 0
+		};
+		this.onScroll = this.onScroll.bind(this);
+	}
+
+	onScroll() {
+		this.setState({ scrollPosition: this.emojiContainer.scrollTop })
+	}
+
+	componentDidMount() {
+		this.emojiContainer.addEventListener('scroll', this.onScroll);
+	}
+
+	componentWillUnMount() {
+		this.emojiContainer.removeEventListener('scroll', this.onScroll);
 	}
 
 	render() {
 		const { showing, onEmojiClick, close } = this.props;
-		if (!showing) {
-			return null;
-		}
 		let xStyle = {
 			color: '#E8E8E8', 
 			fontSize: 20,
@@ -147,7 +164,17 @@ class EmojiSelector extends Component {
 			</span>
 		);
 		const show = emoji.filter(name => name.indexOf(this.state.filter) !== -1);
-		const emojis = show.map(em => {
+		const emptyStyle = {
+			height: 16,
+			width: 16,
+			display: 'inline-block'
+		};
+		const emojis = show.map((em, i) => {
+			const row = Math.floor((i + 1) / EMOJIS_ACROSS);
+			const pixelPosition = row * SINGLE_EMOJI_HEIGHT;
+			const position = this.state.scrollPosition + LOAD_HEIGHT;
+			const shouldShowImage = pixelPosition < position && (position - pixelPosition) <= LOAD_HEIGHT;
+			const image = shouldShowImage ? <EmojiImage name={em} /> : <div style={emptyStyle} />;
 			return (
 				<span 
 					style={{cursor: 'pointer', padding: 5}} 
@@ -157,15 +184,18 @@ class EmojiSelector extends Component {
 						close();
 					}}
 				>
-					<EmojiImage name={em} />
+					{image}
 				</span>
 			);
 		});
 		return (
-			<div style={selectorStyle}>
+			<div style={showing ? selectorStyle : {display: 'none'}}>
 				{searchInput}
 				{x}
-				<div style={{padding: 15, paddingTop: 5, width: '90%'}}>
+				<div 
+					style={{padding: 10, paddingTop: 5, width: 230, height: 160, overflow: 'auto'}}
+					ref={(node) => this.emojiContainer = node}
+				>
 					{emojis}
 				</div>
 			</div>
