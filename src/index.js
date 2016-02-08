@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
 import emoji from './all-emoji';
 
 const wrapperStyle = {
@@ -209,6 +210,7 @@ export default class EmojiReact extends Component {
 		this.state = { hovered: false, showSelector: false };
 		this.onKeyPress = this.onKeyPress.bind(this);
 		this.closeSelector = this.closeSelector.bind(this);
+		this.onClick = this.onClick.bind(this);
 	}
 
 	onKeyPress(e) {
@@ -217,11 +219,19 @@ export default class EmojiReact extends Component {
 		}
 	}
 
+	onClick({ target }) {
+		if (!this.node.contains(target) && this.state.showSelector) {
+			this.closeSelector();
+		}
+	}
+
 	componentDidMount() {
+		document.addEventListener('click', this.onClick);
 		document.addEventListener('keydown', this.onKeyPress);
 	}
 
 	componentWillUnMount() {
+		document.removeEventListener('click', this.onClick);
 		document.removeEventListener('keydown', this.onKeyPress);
 	}
 
@@ -234,7 +244,7 @@ export default class EmojiReact extends Component {
 		const plusButtonStyle = this.state.hovered ? {...wrapperStyle, ...wrapperHover} : wrapperStyle;
 		const plusStyle = this.state.hovered ? {...countStyle, ...countHover} : countStyle;
 		const selector = (
-			<div style={{display: 'inline-block'}}>
+			<div style={{display: 'inline-block'}} ref={node => this.node = node}>
 				<div 
 					style={plusButtonStyle}
 					onMouseEnter={() => this.setState({ hovered: true })}

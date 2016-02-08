@@ -39,5 +39,9 @@
     "react-dom": "^0.14.7",
     "url-loader": "^0.5.7",
     "webpack": "^1.12.13"
+  },
+  "peerDependencies": {
+    "react": "^0.14.x",
+    "react-dom": "^0.14.x"
   }
 }
