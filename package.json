@@ -43,5 +43,8 @@
   "peerDependencies": {
     "react": "^0.14.x",
     "react-dom": "^0.14.x"
+  },
+  "dependencies": {
+    "get-emoji": "^1.0.1"
   }
 }

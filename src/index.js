@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
-import emoji from './all-emoji';
+import { emojiList as emoji } from 'get-emoji';
+import getEmoji from 'get-emoji';
+
 
 const wrapperStyle = {
 	display: 'inline-block',
@@ -52,7 +54,7 @@ const selectorStyle = {
 	top: 0
 };
 
-const EmojiImage = ({name}) => <img style={{width: 16, height: 16}} src={require(`./emoji/${name}.png`)} />;
+const EmojiImage = ({name}) => <img style={{width: 16, height: 16}} src={getEmoji(name)} />;
 
 class SingleEmoji extends Component {
 	constructor() {
