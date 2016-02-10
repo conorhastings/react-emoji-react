@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { findDOMNode } from 'react-dom';
 import { emojiList as emoji } from 'get-emoji';
 import getEmoji from 'get-emoji';
 
