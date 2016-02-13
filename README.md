@@ -13,7 +13,7 @@ A clone (eventually) of slack emoji reactions as a react component
 ### Use
 
 ```js
-import EmojiReact from '../dist';
+import EmojiReact from 'react-emoji-react';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
