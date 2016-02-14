@@ -91,6 +91,12 @@ class SingleEmoji extends Component {
 	}
 }
 
+const PickerEmoji = ({onClick, image}) => (
+	<span style={{cursor: 'pointer', padding: 5}} onClick={() => onClick()}>
+		{image}
+	</span>
+);
+
 const EmojiWrapper = ({reactions, onReaction}) => {
 	return (
 		<div style={{display: 'inline-block'}}>
@@ -178,16 +184,14 @@ class EmojiSelector extends Component {
 			const shouldShowImage = pixelPosition < position && (position - pixelPosition) <= LOAD_HEIGHT;
 			const image = shouldShowImage ? <EmojiImage name={em} /> : <div style={emptyStyle} />;
 			return (
-				<span 
-					style={{cursor: 'pointer', padding: 5}} 
+				<PickerEmoji 
 					key={em}
+					image={image} 
 					onClick={() => {
-						onEmojiClick(em)
+						onEmojiClick(em);
 						close();
 					}}
-				>
-					{image}
-				</span>
+				/>
 			);
 		});
 		return (
