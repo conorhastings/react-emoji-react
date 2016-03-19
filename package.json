@@ -4,9 +4,9 @@
   "description": "a clone of slack emoji reactions in react",
   "main": "dist/index.js",
   "scripts": {
-    "demo": "./node_modules/.bin/webpack --config webpack.demo.config.js --watch --progress",
-    "build": "NODE_ENV='production' ./node_modules/.bin/webpack --progress -p",
-    "watch": "NODE_ENV='development' ./node_modules/.bin/webpack --watch --progress",
+    "demo": "./node_modules/.bin/webpack --config webpack.demo.config.js --watch",
+    "build": "babel src --out-dir dist",
+    "watch": "babel src --watch --out-dir dist",
     "prepublish": "npm run build"
   },
   "keywords": [
@@ -45,6 +45,6 @@
     "react-dom": "^0.14.x"
   },
   "dependencies": {
-    "get-emoji": "^1.0.1"
+    "get-emoji": "^2.0.0"
   }
 }
