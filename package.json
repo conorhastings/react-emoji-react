@@ -1,6 +1,6 @@
 {
   "name": "react-emoji-react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "a clone of slack emoji reactions in react",
   "main": "dist/index.js",
   "scripts": {
