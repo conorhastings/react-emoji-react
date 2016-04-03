@@ -41,8 +41,8 @@
     "webpack": "^1.12.13"
   },
   "peerDependencies": {
-    "react": "^0.14.x",
-    "react-dom": "^0.14.x"
+    "react": ">= 0.14.0",
+    "react-dom": ">= 0.14.0"
   },
   "dependencies": {
     "get-emoji": "^2.0.0"

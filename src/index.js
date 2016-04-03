@@ -5,11 +5,11 @@ import getEmoji from 'get-emoji';
 
 const wrapperStyle = {
 	display: 'inline-block',
-	marginTop: 2,
-	marginBottom: 2,
-	marginRight: 4,
+	marginTop: '2px',
+	marginBottom: '2px',
+	marginRight: '4px',
 	padding: '1px 3px',
-	borderRadius: 5,
+	borderRadius: '5px',
 	backgroundColor: '#fff',
 	border: '1px solid #E8E8E8',
 	cursor: 'pointer',
@@ -31,10 +31,10 @@ const wrapperHover = {
 };
 
 const countStyle = {
-	fontSize: 11,
+	fontSize: '11px',
 	fontFamily: 'helvetica, arial',
 	position: 'relative',
-	top: -2,
+	top: '-2px',
 	padding: '0 1px 3px',
 	color: '#959595'
 };
@@ -46,14 +46,14 @@ const countHover = {
 const selectorStyle = {
 	boxShadow: '0 6px 8px 0 rgba(0, 0, 0, 0.24)',
 	backgroundColor: '#fff',
-	width: 250,
-	height: 220,
+	width: '250px',
+	height: '220px',
 	position: 'relative',
-	left: 10,
-	top: 0
+	left: '10px',
+	top: '0px'
 };
 
-const EmojiImage = ({name}) => <img style={{width: 16, height: 16}} src={getEmoji(name)} />;
+const EmojiImage = ({name}) => <img style={{width: '16px', height: '16px'}} src={getEmoji(name)} />;
 
 class SingleEmoji extends Component {
 	constructor() {
@@ -92,7 +92,7 @@ class SingleEmoji extends Component {
 }
 
 const PickerEmoji = ({onClick, image}) => (
-	<span style={{cursor: 'pointer', padding: 5}} onClick={() => onClick()}>
+	<span style={{cursor: 'pointer', padding: '5px'}} onClick={() => onClick()}>
 		{image}
 	</span>
 );
@@ -138,11 +138,11 @@ class EmojiSelector extends Component {
 		const { showing, onEmojiClick, close } = this.props;
 		let xStyle = {
 			color: '#E8E8E8', 
-			fontSize: 20,
+			fontSize: '20px',
 			cursor: 'pointer', 
 			float: 'right', 
-			marginTop: -32,
-			marginRight: 5 
+			marginTop: '-32px',
+			marginRight: '5px' 
 		};
 		if (this.state.xHovered) {
 			xStyle.color = '#4fb0fc';
@@ -150,7 +150,7 @@ class EmojiSelector extends Component {
 		const searchInput = (
 			<div>
 				<input 
-					style={{margin: 10, width: '85%', borderRadius: 5, border: '1px solid #E8E8E8'}}
+					style={{margin: '10px', width: '85%', borderRadius: '5px', border: '1px solid #E8E8E8'}}
 					type='text' 
 					placeholder='Search'
 					value={this.state.filter} 
@@ -173,8 +173,8 @@ class EmojiSelector extends Component {
 		);
 		const show = emoji.filter(name => name.indexOf(this.state.filter) !== -1);
 		const emptyStyle = {
-			height: 16,
-			width: 16,
+			height: '16px',
+			width: '16px',
 			display: 'inline-block'
 		};
 		const emojis = show.map((em, i) => {
@@ -199,7 +199,7 @@ class EmojiSelector extends Component {
 				{searchInput}
 				{x}
 				<div 
-					style={{padding: 10, paddingTop: 5, width: 230, height: 160, overflow: 'auto'}}
+					style={{padding: '10px', paddingTop: '5px', width: '230px', height: '160px', overflow: 'auto'}}
 					ref={(node) => this.emojiContainer = node}
 				>
 					{emojis}
