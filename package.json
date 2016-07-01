@@ -45,6 +45,7 @@
     "react-dom": ">= 0.14.0"
   },
   "dependencies": {
-    "get-emoji": "^2.0.0"
+    "get-emoji": "^2.0.0",
+    "reactify": "^1.1.1"
   }
 }
