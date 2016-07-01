@@ -2,7 +2,7 @@
 
 A clone (eventually) of slack emoji reactions as a react component
 
-<a href="http://conorhastings.com/react-emoji-react/demo/index.html">Click here for a demo</a>. 
+<a href="http://conorhastings.com/react-emoji-react/demo/index.html">Click here for a demo</a>.
 
 <img src="http://i.imgur.com/qbvWhU7.gif" />
 
@@ -62,10 +62,11 @@ class ReactingComponent extends Component {
 
   render() {
     return (
-      <EmojiReact 
-        reactions={this.state.emojis} 
-        onReaction={(name) => this.onReaction(name)} 
+      <EmojiReact
+        reactions={this.state.emojis}
+        onReaction={(name) => this.onReaction(name)}
         onEmojiClick={(name) => this.onEmojiClick(name)}
+        sort={true}
       />
     );
   }
@@ -75,11 +76,12 @@ class ReactingComponent extends Component {
 render(<ReactingComponent />, document.getElementById('app'));
 ```
 
+### sort
+
+You can set sort to `true` in order to sort the reactions by descending order.
 
 ### Args
 
 * `reactions` - an array of current emoji reactions, reactions are objects containing name and count.
 * `onReaction` - fired when a current reaction is clicked.
 * `onEmojiClick` - fired when a new emoji is selected.
-
-
