@@ -76,12 +76,9 @@ class ReactingComponent extends Component {
 render(<ReactingComponent />, document.getElementById('app'));
 ```
 
-### sort
-
-You can set sort to `true` in order to sort the reactions by descending order.
-
 ### Args
 
 * `reactions` - an array of current emoji reactions, reactions are objects containing name and count.
 * `onReaction` - fired when a current reaction is clicked.
 * `onEmojiClick` - fired when a new emoji is selected.
+* `sort` - You can set sort to `true` in order to sort the reactions by descending order.
