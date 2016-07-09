@@ -62,25 +62,25 @@ class SingleEmoji extends Component {
 	}
 
 	render() {
-		const { 
-			name, 
-			count = 1, 
+		const {
+			name,
+			count = 1,
 			styles = {
-				wrapperStyle: wrapperStyle, 
-				emojiStyle: emojiStyle, 
+				wrapperStyle: wrapperStyle,
+				emojiStyle: emojiStyle,
 				countStyle: countStyle,
 				wrapperHover: wrapperHover,
 				countHover: countHover
-			}, 
+			},
 			onClick = () => {}
 		} = this.props;
 
 		const wrapperFinalStyle = this.state.hovered ? {...wrapperStyle, ...wrapperHover} : wrapperStyle;
 		const countFinalStyle = this.state.hovered ? {...countStyle, ...countHover} : countStyle;
 		return (
-			<div 
-				style={wrapperFinalStyle} 
-				onClick={() => onClick(name)} 
+			<div
+				style={wrapperFinalStyle}
+				onClick={() => onClick(name)}
 				onMouseEnter={() => this.setState({hovered: true})}
 				onMouseLeave={() => this.setState({hovered: false})}
 			>
@@ -114,8 +114,8 @@ const EMOJIS_ACROSS = 8
 class EmojiSelector extends Component {
 	constructor() {
 		super();
-		this.state = { 
-			filter: "", 
+		this.state = {
+			filter: "",
 			xHovered: false,
 			scrollPosition: 0
 		};
@@ -137,29 +137,29 @@ class EmojiSelector extends Component {
 	render() {
 		const { showing, onEmojiClick, close } = this.props;
 		let xStyle = {
-			color: '#E8E8E8', 
+			color: '#E8E8E8',
 			fontSize: '20px',
-			cursor: 'pointer', 
-			float: 'right', 
+			cursor: 'pointer',
+			float: 'right',
 			marginTop: '-32px',
-			marginRight: '5px' 
+			marginRight: '5px'
 		};
 		if (this.state.xHovered) {
 			xStyle.color = '#4fb0fc';
 		}
 		const searchInput = (
 			<div>
-				<input 
+				<input
 					style={{margin: '10px', width: '85%', borderRadius: '5px', border: '1px solid #E8E8E8'}}
-					type='text' 
+					type='text'
 					placeholder='Search'
-					value={this.state.filter} 
+					value={this.state.filter}
 					onChange={(e) => this.setState({filter: e.target.value})}
 				/>
 			</div>
 		);
 		const x = (
-			<span 
+			<span
 				style={xStyle}
 				onClick={() => {
 					this.setState({ xHovered: false});
@@ -167,7 +167,7 @@ class EmojiSelector extends Component {
 				}}
 				onMouseEnter={() => this.setState({ xHovered: true})}
 				onMouseLeave={() => this.setState({ xHovered: false})}
-			> 
+			>
 				x
 			</span>
 		);
@@ -184,9 +184,9 @@ class EmojiSelector extends Component {
 			const shouldShowImage = pixelPosition < position && (position - pixelPosition) <= LOAD_HEIGHT;
 			const image = shouldShowImage ? <EmojiImage name={em} /> : <div style={emptyStyle} />;
 			return (
-				<PickerEmoji 
+				<PickerEmoji
 					key={em}
-					image={image} 
+					image={image}
 					onClick={() => {
 						onEmojiClick(em);
 						close();
@@ -198,7 +198,7 @@ class EmojiSelector extends Component {
 			<div style={showing ? selectorStyle : {display: 'none'}}>
 				{searchInput}
 				{x}
-				<div 
+				<div
 					style={{padding: '10px', paddingTop: '5px', width: '230px', height: '160px', overflow: 'auto'}}
 					ref={(node) => this.emojiContainer = node}
 				>
@@ -245,12 +245,18 @@ export default class EmojiReact extends Component {
 	}
 
 	render() {
-		const { reactions, onReaction, onEmojiClick } = this.props;
+		let { reactions, onReaction, onEmojiClick, sort } = this.props;
+		if (sort) {
+		reactions = reactions.slice(0);
+	    reactions.sort(function (a, b) {
+	      return b.count - a.count;
+	    });
+		}
 		const plusButtonStyle = this.state.hovered ? {...wrapperStyle, ...wrapperHover} : wrapperStyle;
 		const plusStyle = this.state.hovered ? {...countStyle, ...countHover} : countStyle;
 		const selector = (
 			<div style={{display: 'inline-block'}} ref={node => this.node = node}>
-				<div 
+				<div
 					style={plusButtonStyle}
 					onMouseEnter={() => this.setState({ hovered: true })}
 					onMouseLeave={() => this.setState({ hovered: false})	}
@@ -258,9 +264,9 @@ export default class EmojiReact extends Component {
 				>
 					<span style={plusStyle}>+</span>
 				</div>
-				<EmojiSelector 
-					showing={this.state.showSelector} 
-					onEmojiClick={onEmojiClick} 
+				<EmojiSelector
+					showing={this.state.showSelector}
+					onEmojiClick={onEmojiClick}
 					close={this.closeSelector}
 				/>
 			</div>

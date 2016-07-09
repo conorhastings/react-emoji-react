@@ -1,6 +1,6 @@
 node_modules
-dist
 npm-debug.log
 demo/demo.js
 demo/demo.js.map
+dist
 .DS_Store
