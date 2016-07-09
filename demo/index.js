@@ -48,10 +48,10 @@ class Testing extends Component {
 	render() {
 		return (
 			<EmojiReact
-				reactions={this.state.emojis}
-				onReaction={(name) => this.onReaction(name)}
-				onEmojiClick={(name) => this.onEmojiClick(name)}
-				sort={true}
+			reactions={this.state.emojis}
+			onReaction={(name) => this.onReaction(name)}
+			onEmojiClick={(name) => this.onEmojiClick(name)}
+			sort={true}
 			/>
 		);
 	}
