@@ -82,4 +82,27 @@ render(<ReactingComponent />, document.getElementById('app'));
 * `onReaction` - fired when a current reaction is clicked.
 * `onEmojiClick` - fired when a new emoji is selected.
 
+### Styling
+
+Optionally change style by passing style elements like so:
+
+```
+  <EmojiReact 
+    reactions={this.state.emojis} 
+    onReaction={(name) => this.onReaction(name)} 
+    onEmojiClick={(name) => this.onEmojiClick(name)}
+    wrapperStyle={{border:'none'}}
+  />
+```
+
+You can modify the following styling options:
+
+*`wrapperStyle` - controls the borders around emoji
+*`wrapperHover` - controls the borders around emoji when hovering
+*`emojiStyle` - controls emoji themselves
+*`countstyle` - controls the style of each emojis' count
+*`countHover` - controls the style of emoji count when hovering
+*`searchInput` - controls search input style
+*`selectorStyle` - controls style of selector
+
 
