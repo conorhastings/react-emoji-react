@@ -97,12 +97,13 @@ Optionally change style by passing style elements like so:
 
 You can modify the following styling options:
 
-* `wrapperStyle` - controls the borders around emoji
-* `wrapperHover` - controls the borders around emoji when hovering
-* `emojiStyle` - controls emoji themselves
-* `countstyle` - controls the style of each emojis' count
-* `countHover` - controls the style of emoji count when hovering
-* `searchInput` - controls search input style
-* `selectorStyle` - controls style of selector
+* `wrapperStyle` - controls the borders around emoji.
+* `wrapperHover` - controls the borders around emoji when hovering.
+* `emojiStyle` - controls emoji themselves.
+* `countstyle` - controls the style of each emojis' count.
+* `countHover` - controls the style of emoji count when hovering.
+* `searchInput` - controls search input style.
+* `selectorStyle` - controls style of selector.
+* `xStyle` - controls style of close icon.
 
 
