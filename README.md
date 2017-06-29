@@ -2,7 +2,7 @@
 
 A clone (eventually) of slack emoji reactions as a react component
 
-<a href="http://conorhastings.com/react-emoji-react/demo/index.html">Click here for a demo</a>. 
+<a href="http://conor.rodeo/react-emoji-react/demo/index.html">Click here for a demo</a>. 
 
 <img src="http://i.imgur.com/qbvWhU7.gif" />
 
