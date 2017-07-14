@@ -65,18 +65,11 @@ class SingleEmoji extends Component {
 		const { 
 			name, 
 			count = 1, 
-			styles = {
-				wrapperStyle: wrapperStyle, 
-				emojiStyle: emojiStyle, 
-				countStyle: countStyle,
-				wrapperHover: wrapperHover,
-				countHover: countHover
-			}, 
 			onClick = () => {}
 		} = this.props;
 
-		const wrapperFinalStyle = this.state.hovered ? {...wrapperStyle, ...wrapperHover} : wrapperStyle;
-		const countFinalStyle = this.state.hovered ? {...countStyle, ...countHover} : countStyle;
+		const wrapperFinalStyle = this.state.hovered ? { ...this.props.customStyles.wrapperStyle, ...this.props.customStyles.wrapperHover) : this.props.customStyles.wrapperStyle;
+		const countFinalStyle = this.state.hovered ? { ...this.props.customStyles.countStyle, ...this.props.customStyles.countHover) : this.props.customStyles.countStyle;
 		return (
 			<div 
 				style={wrapperFinalStyle} 
@@ -97,11 +90,16 @@ const PickerEmoji = ({onClick, image}) => (
 	</span>
 );
 
-const EmojiWrapper = ({reactions, onReaction}) => {
+const EmojiWrapper = ({reactions, onReaction, customStyles}) => {
 	return (
 		<div style={{display: 'inline-block'}}>
 			{reactions.map(({name, count}) => (
-				<SingleEmoji name={name} count={count} key={name} onClick={onReaction} />
+				<SingleEmoji
+					name={name}
+					count={count}
+					key={name}
+					onClick={onReaction}
+					customStyles={customStyles} />
 			))}
 		</div>
 	);
@@ -147,10 +145,18 @@ class EmojiSelector extends Component {
 		if (this.state.xHovered) {
 			xStyle.color = '#4fb0fc';
 		}
+		let searchInputStyle = 
+			{
+				margin: '10px',
+				width: '85%',
+				borderRadius: '5px',
+				border: '1px solid #E8E8E8'
+			};
+
 		const searchInput = (
 			<div>
 				<input 
-					style={{margin: '10px', width: '85%', borderRadius: '5px', border: '1px solid #E8E8E8'}}
+					style={{ ...searchInputStyle, ...this.props.customStyles.searchInput}}
 					type='text' 
 					placeholder='Search'
 					value={this.state.filter} 
@@ -158,19 +164,18 @@ class EmojiSelector extends Component {
 				/>
 			</div>
 		);
-		const x = (
+		const x =
 			<span 
-				style={xStyle}
 				onClick={() => {
 					this.setState({ xHovered: false});
 					close();
 				}}
+				style={{ ...Style, ...this.props.customStyles.xStyle}}
 				onMouseEnter={() => this.setState({ xHovered: true})}
 				onMouseLeave={() => this.setState({ xHovered: false})}
 			> 
 				x
-			</span>
-		);
+			</span>;
 		const show = emoji.filter(name => name.indexOf(this.state.filter) !== -1);
 		const emptyStyle = {
 			height: '16px',
@@ -195,7 +200,7 @@ class EmojiSelector extends Component {
 			);
 		});
 		return (
-			<div style={showing ? selectorStyle : {display: 'none'}}>
+			<div style={showing ? this.props.customStyles.selectorStyle : {display: 'none'}}>
 				{searchInput}
 				{x}
 				<div 
@@ -245,9 +250,19 @@ export default class EmojiReact extends Component {
 	}
 
 	render() {
+		let customStyles = {
+			wrapperStyle: { ...wrapperStyle, ..this.props.wrapperStyle}, 
+			emojiStyle: { ...emojiStyle, ..this.props.emojiStyle}, 
+			countStyle: { ...countStyle, ..this.props.countStyle},
+			wrapperHover: { ...wrapperHover, ..this.props.wrapperHover},
+			countHover: { ...countHover, ..this.props.countHover},
+			selectorStyle: { ...selectorStyle, ..this.props.selectorStyle},
+			searchInput: this.props.searchInput,
+			xStyle: this.props.xStyle
+		}
 		const { reactions, onReaction, onEmojiClick } = this.props;
-		const plusButtonStyle = this.state.hovered ? {...wrapperStyle, ...wrapperHover} : wrapperStyle;
-		const plusStyle = this.state.hovered ? {...countStyle, ...countHover} : countStyle;
+		const plusButtonStyle = this.state.hovered ? { ...customStyles.wrapperStyle, ...customStyles.wrapperHover} : customStyles.wrapperStyle;
+		const plusStyle = this.state.hovered ? { ...customStyles.countStyle, ...customStyles.countHover} : customStyles.countStyle;
 		const selector = (
 			<div style={{display: 'inline-block'}} ref={node => this.node = node}>
 				<div 
@@ -262,12 +277,16 @@ export default class EmojiReact extends Component {
 					showing={this.state.showSelector} 
 					onEmojiClick={onEmojiClick} 
 					close={this.closeSelector}
+					customStyles={customStyles}
 				/>
 			</div>
 		);
 		return (
 			<div style={{display: 'inline-flex'}}>
-				<EmojiWrapper onReaction={onReaction} reactions={reactions} />
+				<EmojiWrapper
+					onReaction={onReaction}
+					reactions={reactions}
+					customStyles={customStyles} />
 				{selector}
 			</div>
 		);
